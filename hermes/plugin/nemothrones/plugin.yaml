@@ -1,0 +1,9 @@
+name: nemothrones
+version: 0.2.0
+description: "Read-only NemoThrones world, scene, lore and canon tools for the Hermes Game Master."
+author: jack
+provides_tools:
+  - nt_world
+  - nt_scene
+  - nt_lore
+  - nt_canon

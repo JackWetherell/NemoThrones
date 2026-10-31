@@ -1,0 +1,22 @@
+# A scripted life of Eddard Stark (mock LLM, seed 42). Lines starting with # are ignored.
+/help
+/me
+/who
+"Catelyn, what troubles you?"
+1
+/know Jon Arryn
+/house Lannister
+go to the yard
+/who
+"Theon, you must swear to me you will keep your tongue."
+/why
+write to Benjen Stark: Brother, the king rides north. Come if the Watch can spare you.
+/letters
+/wait 2 days
+/journal
+/odds fuzzy
+/cost
+/debug rebuild
+I throw myself from the broken tower
+y
+/me

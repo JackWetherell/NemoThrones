@@ -1,0 +1,15 @@
+# Featured starts. Those with a `pack` play offline from a hand-authored seed pack;
+# the rest are generated from WOIAF by the lore pipeline (needs awoiaf.westeros.org).
+- {id: eddard_298, character: Eddard Stark, year: 298, pack: winterfell_298, player: eddard_stark, blurb: "Lord of Winterfell, on the day word of Jon Arryn's death arrives."}
+- {id: catelyn_298, character: Catelyn Stark, year: 298, pack: winterfell_298, player: catelyn_stark, blurb: "Lady of Winterfell, holding a letter from King's Landing."}
+- {id: jon_298, character: Jon Snow, year: 298, pack: winterfell_298, player: jon_snow, blurb: "Lord Stark's bastard, in the practice yard with his brothers."}
+- {id: arya_298, character: Arya Stark, year: 298, pack: winterfell_298, player: arya_stark, blurb: "A girl who would rather hold a sword than a needle."}
+- {id: theon_298, character: Theon Greyjoy, year: 298, pack: winterfell_298, player: theon_greyjoy, blurb: "Ward and hostage of Winterfell."}
+- {id: robert_298, character: Robert I Baratheon, year: 298, pack: winterfell_298, player: robert_baratheon, blurb: "The king, riding north to ask an old friend a hard favour."}
+- {id: tyrion_298, character: Tyrion Lannister, year: 298, pack: winterfell_298, player: tyrion_lannister, blurb: "The Imp, on the kingsroad with the royal party."}
+- {id: cersei_298, character: Cersei Lannister, year: 298, pack: winterfell_298, player: cersei_lannister, blurb: "The queen, with a secret worth a kingdom."}
+- {id: daenerys_298, character: Daenerys Targaryen, year: 298, blurb: "The exiled princess, in Pentos (generated from WOIAF)."}
+- {id: rhaenyra_129, character: Rhaenyra Targaryen, year: 129, blurb: "The Realm's Delight, as the Dance begins (generated from WOIAF)."}
+- {id: daemon_129, character: Daemon Targaryen, year: 129, blurb: "The Rogue Prince (generated from WOIAF)."}
+- {id: duncan_209, character: Duncan the Tall, year: 209, blurb: "A hedge knight on the road to Ashford (generated from WOIAF)."}
+- {id: jaime_282, character: Jaime Lannister, year: 282, blurb: "A young knight of the Kingsguard, as the rebellion begins (generated from WOIAF)."}

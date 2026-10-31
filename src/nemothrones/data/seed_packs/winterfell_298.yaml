@@ -1,0 +1,602 @@
+# Winterfell, 298 AC: the hand-authored vertical-slice pack.
+#
+# Authored from canon knowledge of A Game of Thrones and A Wiki of Ice and Fire, for
+# offline play and as the engine's test fixture. Birth years follow WOIAF where they
+# are well established; skills, opinions, map coordinates and in-year dates are GAME
+# ESTIMATES, not canon. When WOIAF is reachable, `nemothrones new --character ...
+# --year 298` builds a generated era pack straight from the wiki instead.
+#
+# `fate` fields are Director-only: they are split off at seeding and never shown to
+# agents, the narrator or the GM.
+
+id: winterfell_298
+title: "A Game of Thrones — Winterfell, 298 AC"
+source: seed
+year: 298
+moon: 2
+day: 10
+hour: 16
+season: summer
+default_player: eddard_stark
+
+houses:
+  - {id: stark, name: House Stark, seat: winterfell, head: eddard_stark, words: "Winter Is Coming", sigil: "a grey direwolf racing across a field of white", region: the North}
+  - {id: baratheon, name: House Baratheon, seat: kings_landing, head: robert_baratheon, words: "Ours Is the Fury", sigil: "a crowned black stag on gold", region: the Stormlands}
+  - {id: lannister, name: House Lannister, seat: casterly_rock, words: "Hear Me Roar!", sigil: "a golden lion rampant on crimson", region: the Westerlands}
+  - {id: greyjoy, name: House Greyjoy, seat: pyke, words: "We Do Not Sow", sigil: "a golden kraken on black", region: the Iron Islands}
+  - {id: tully, name: House Tully, seat: riverrun, words: "Family, Duty, Honor", sigil: "a leaping silver trout on blue and red", region: the Riverlands}
+  - {id: arryn, name: House Arryn, seat: the_eyrie, words: "As High as Honor", sigil: "a white moon-and-falcon on sky blue", region: the Vale}
+  - {id: cassel, name: House Cassel, liege: stark, region: the North}
+  - {id: nights_watch, name: The Night's Watch, seat: castle_black, words: "Night gathers, and now my watch begins", sigil: "plain black", region: the Wall}
+
+locations:
+  - id: winterfell
+    name: Winterfell
+    region: the North
+    kind: castle
+    x: -30
+    y: 450
+    has_maester: true
+    description: "The ancient seat of House Stark: grey granite walls, hot springs beneath, glass gardens, a godswood with a great white heart tree."
+    sublocations: ["the godswood", "the yard", "the great hall", "the Great Keep", "Maester Luwin's turret", "the kennels", "the First Keep", "the broken tower", "the crypts", "the sept", "the kitchens", "the stables"]
+  - {id: wintertown, name: Wintertown, region: the North, kind: town, x: -28, y: 455, parent: winterfell}
+  - {id: castle_black, name: Castle Black, region: the Wall, kind: castle, x: 0, y: 0, has_maester: true, description: "The chief stronghold of the Night's Watch, huddled beneath the Wall.", sublocations: ["the common hall", "the yard", "the top of the Wall", "the Lord Commander's tower"]}
+  - {id: white_harbor, name: White Harbor, region: the North, kind: city, x: 150, y: 700, has_maester: true}
+  - {id: moat_cailin, name: Moat Cailin, region: the Neck, kind: ruin, x: -20, y: 820}
+  - {id: kingsroad_neck, name: "the kingsroad, south of the Neck", region: the Riverlands, kind: road, x: 60, y: 1150, aliases: ["the kingsroad"], description: "The royal party's camp on the kingsroad.", sublocations: ["the royal camp", "the king's pavilion", "the wheelhouse"]}
+  - {id: the_twins, name: The Twins, region: the Riverlands, kind: castle, x: -40, y: 1100, has_maester: true}
+  - {id: riverrun, name: Riverrun, region: the Riverlands, kind: castle, x: -250, y: 1350, has_maester: true}
+  - {id: the_eyrie, name: The Eyrie, region: the Vale, kind: castle, x: 300, y: 1150, has_maester: true}
+  - {id: kings_landing, name: King's Landing, region: the Crownlands, kind: city, x: 250, y: 1650, has_maester: true, aliases: ["the capital"], sublocations: ["the Red Keep", "the throne room", "the Tower of the Hand", "Flea Bottom", "the Great Sept of Baelor"]}
+  - {id: casterly_rock, name: Casterly Rock, region: the Westerlands, kind: castle, x: -650, y: 1450, has_maester: true}
+  - {id: pyke, name: Pyke, region: the Iron Islands, kind: castle, x: -700, y: 1150, has_maester: true}
+
+common_knowledge:
+  - {subject: King Robert Baratheon, content: "Robert of House Baratheon, first of his name, sits the Iron Throne. He won it fifteen years ago in the rebellion against the Mad King, Aerys II Targaryen."}
+  - {subject: The Hand of the King, content: "Lord Jon Arryn of the Eyrie has served as Hand of the King since the rebellion."}
+  - {subject: Queen Cersei, content: "The queen is Cersei of House Lannister, daughter of Lord Tywin. She has given King Robert three children: Joffrey, Myrcella and Tommen."}
+  - {subject: House Lannister, content: "Lord Tywin Lannister of Casterly Rock is the richest lord in the Seven Kingdoms. His son Ser Jaime of the Kingsguard slew the Mad King, and is called Kingslayer for it."}
+  - {subject: The last Targaryens, content: "The Mad King's surviving children, Viserys and Daenerys, fled across the narrow sea as children; they are said to wander the Free Cities in exile."}
+  - {subject: The Night's Watch, content: "The Night's Watch holds the Wall against the wildlings. A man who takes the black gives up lands, wife and children for life."}
+  - {subject: The season, content: "Summer has lasted nearly ten years. The Citadel has not yet sent the white ravens to proclaim autumn."}
+  - {subject: The Greyjoy Rebellion, content: "Nine years ago Balon Greyjoy rose against the king and was crushed. His last living son, Theon, was given to Lord Stark as ward and hostage."}
+
+characters:
+  - id: eddard_stark
+    name: Eddard Stark
+    wiki_title: Eddard Stark
+    aliases: [Ned, Lord Stark]
+    house: stark
+    born_year: 263
+    gender: male
+    location: winterfell
+    sublocation: the godswood
+    importance: 1.0
+    titles: [Lord of Winterfell, Warden of the North]
+    culture: Northmen
+    faith: the old gods
+    appearance: "A long-faced, grave man with dark brown hair and a short beard shot with grey; grey eyes that give little away."
+    traits: [honourable, dutiful, reserved, stern, just, loyal, slow to anger]
+    values: [honour, duty, family, the old gods, keeping his word]
+    fears: [dishonour, harm to his children, the South and its games]
+    voice: "Spare, plain speech; grave and courteous; says what he means and expects the same. No flourishes."
+    summary: "Second son of Lord Rickard Stark, fostered at the Eyrie with Robert Baratheon under Jon Arryn. His father and elder brother Brandon were murdered by the Mad King, and Eddard fought beside Robert through the rebellion of 282–283 AC. He wed Catelyn Tully in Brandon's place and came home from the war with a bastard son, Jon Snow. He fought again in the Greyjoy Rebellion of 289 AC, after which Theon Greyjoy came to Winterfell as his ward. This morning he beheaded a deserter of the Night's Watch."
+    skills: {martial: 15, diplomacy: 9, intrigue: 4, stewardship: 13, learning: 9, prowess: 14}
+    possessions: ["Ice, the Valyrian steel greatsword of House Stark"]
+    secrets: ["The truth of Jon Snow's birth, which you promised your dying sister Lyanna to keep. You have told no one, not even Catelyn."]
+    ambitions: ["Keep the North safe and your family whole", "Raise your children to be just and true"]
+    plans: ["See that the deserter's words about the Others are not spread to frighten the smallfolk"]
+    knowledge:
+      - {subject: The deserter, content: "This morning you beheaded a deserter of the Night's Watch named Gared. He raved that he had seen the Others.", source: witnessed}
+      - {subject: The direwolf pups, content: "On the ride home your children found a dead direwolf with six living pups. Each of your trueborn children has one; Jon Snow found a sixth, an albino.", source: witnessed}
+    activity: "cleaning Ice beside the black pool"
+    fate: "Goes south as Hand of the King. Learns that the queen's children were fathered by Jaime Lannister. After King Robert's death he is betrayed by Petyr Baelish and the City Watch, imprisoned, and beheaded with Ice on King Joffrey's order at the Great Sept of Baelor in 298 AC."
+
+  - id: catelyn_stark
+    name: Catelyn Stark
+    wiki_title: Catelyn Stark
+    aliases: [Cat, Lady Stark, Catelyn Tully]
+    house: stark
+    born_year: 264
+    gender: female
+    location: winterfell
+    sublocation: "Maester Luwin's turret"
+    importance: 0.95
+    titles: [Lady of Winterfell]
+    culture: Rivermen
+    faith: the Seven
+    appearance: "Auburn-haired and blue-eyed, with the Tully colouring; handsome, composed, with a direct gaze."
+    traits: [devoted mother, proud, shrewd, quick to fear for her children, steadfast, resentful of her husband's bastard]
+    values: [family, duty, honour, the Seven]
+    fears: [losing her children, her husband being taken from her]
+    voice: "Courtly but direct, a river lord's daughter; warm with her children, cold with those she mistrusts."
+    summary: "Elder daughter of Lord Hoster Tully of Riverrun. Betrothed to Brandon Stark, she wed his brother Eddard after Brandon's murder. Mother of Robb, Sansa, Arya, Bran and Rickon. She keeps the Seven in a castle of the old gods, and has never accepted Jon Snow."
+    skills: {martial: 4, diplomacy: 13, intrigue: 10, stewardship: 13, learning: 10, prowess: 3}
+    ambitions: ["Keep your children safe and see them well matched"]
+    plans: ["Go to Ned in the godswood and tell him the news from King's Landing"]
+    knowledge:
+      - {subject: Jon Arryn, content: "Lord Jon Arryn, Hand of the King and husband of your sister Lysa, is dead. The news came today from King's Landing.", source: "letter (read by Maester Luwin)"}
+      - {subject: The king rides north, content: "King Robert is coming to Winterfell with the queen and much of the court.", source: "letter (read by Maester Luwin)"}
+    activity: "hearing grim tidings from Maester Luwin"
+    fate: "After Bran's fall she rides south in secret, seizes Tyrion Lannister at the crossroads inn, and later counsels Robb through the war. She is murdered at the Red Wedding at the Twins in 299 AC."
+
+  - id: robb_stark
+    name: Robb Stark
+    wiki_title: Robb Stark
+    house: stark
+    born_year: 283
+    gender: male
+    location: winterfell
+    sublocation: the yard
+    importance: 0.85
+    titles: [Heir to Winterfell]
+    culture: Northmen
+    faith: the old gods
+    appearance: "Broad-shouldered for his years, with his mother's Tully auburn hair and blue eyes."
+    traits: [earnest, brave, eager to prove himself, loyal, quick to anger in a quarrel]
+    values: [family, honour, his father's approval]
+    fears: [failing his father, being thought a boy]
+    voice: "Frank and warm; tries to sound like his father when he is serious."
+    summary: "Eldest son and heir of Eddard and Catelyn Stark. Has trained at arms with Jon Snow and Theon Greyjoy under Ser Rodrik Cassel since he could walk."
+    skills: {martial: 11, diplomacy: 8, intrigue: 5, stewardship: 7, learning: 8, prowess: 12}
+    possessions: ["a grey direwolf pup"]
+    ambitions: ["Be worthy of Winterfell"]
+    knowledge:
+      - {subject: The direwolf pups, content: "You helped find the dead direwolf and her pups; one of them is yours now.", source: witnessed}
+    activity: "sparring in the yard"
+    fate: "Calls the banners after his father's arrest and is proclaimed King in the North in 298 AC. He wins every battle, but breaks his oath to House Frey by wedding Jeyne Westerling, and is murdered at the Red Wedding in 299 AC."
+
+  - id: jon_snow
+    name: Jon Snow
+    wiki_title: Jon Snow
+    aliases: [Jon, Lord Snow]
+    house: stark
+    born_year: 283
+    gender: male
+    location: winterfell
+    sublocation: the yard
+    importance: 0.9
+    titles: []
+    culture: Northmen
+    faith: the old gods
+    appearance: "Lean and long-faced, with dark hair and grey eyes: more Stark in looks than any of his father's trueborn sons."
+    traits: [brooding, honourable, proud, watchful, skilled with a sword, feels himself an outsider]
+    values: [honour, belonging, his father's regard, his siblings]
+    fears: [being nothing, never knowing his mother]
+    voice: "Quiet, guarded, dry; speaks little and means it."
+    summary: "Bastard son of Lord Eddard Stark, raised at Winterfell alongside his trueborn half-siblings. Lady Catelyn has never warmed to him. He has trained at arms with Robb since boyhood and admires his uncle Benjen of the Night's Watch."
+    skills: {martial: 10, diplomacy: 6, intrigue: 6, stewardship: 6, learning: 9, prowess: 13}
+    possessions: ["an albino direwolf pup with red eyes"]
+    ambitions: ["Prove that a bastard can be worth something", "Perhaps take the black, as Uncle Benjen did"]
+    knowledge:
+      - {subject: Your mother, content: "You do not know who your mother was. Your father will not speak of her.", source: "your own life"}
+      - {subject: The direwolf pups, content: "You found the dead direwolf's sixth pup, apart from the rest: a silent white one with red eyes.", source: witnessed}
+    activity: "at practice in the yard"
+    fate: "Takes the black at Castle Black in 298 AC and becomes steward to Lord Commander Mormont. Ranges beyond the Wall, lives among the wildlings, is elected the 998th Lord Commander in 300 AC, and is stabbed by his own sworn brothers in 300 AC."
+
+  - id: sansa_stark
+    name: Sansa Stark
+    wiki_title: Sansa Stark
+    house: stark
+    born_year: 286
+    gender: female
+    location: winterfell
+    sublocation: the Great Keep
+    importance: 0.7
+    culture: Northmen
+    faith: the Seven
+    appearance: "Tall for her age and lovely, with her mother's auburn hair and blue eyes."
+    traits: [courteous, romantic, dutiful, proper, loves songs and tales of knights]
+    values: [courtesy, beauty, making a fine marriage]
+    fears: [being shamed, her sister's wildness reflecting on her]
+    voice: "Polite and careful, a well-schooled lady; 'my lord', 'my lady'."
+    summary: "Elder daughter of Eddard and Catelyn Stark, schooled by Septa Mordane in the courtesies of a highborn lady."
+    skills: {martial: 1, diplomacy: 9, intrigue: 4, stewardship: 6, learning: 8, prowess: 1}
+    possessions: ["a direwolf pup"]
+    ambitions: ["Marry a prince, gallant and golden"]
+    activity: "at needlework with Septa Mordane"
+    fate: "Betrothed to Prince Joffrey; becomes a hostage in King's Landing after her father's arrest. Later smuggled to the Vale by Petyr Baelish, where she lives disguised as his bastard daughter Alayne."
+
+  - id: arya_stark
+    name: Arya Stark
+    wiki_title: Arya Stark
+    aliases: [Arya Horseface, Arry]
+    house: stark
+    born_year: 289
+    gender: female
+    location: winterfell
+    sublocation: the yard
+    importance: 0.75
+    culture: Northmen
+    faith: the old gods
+    appearance: "A skinny, long-faced girl with her father's dark hair and grey eyes, forever scuffed and muddy."
+    traits: [wilful, fierce, curious, hot-tempered, loyal, loathes needlework]
+    values: [fairness, her family, freedom]
+    fears: [being made into a lady, being left behind]
+    voice: "Blunt and quick; says what she thinks and argues back."
+    summary: "Younger daughter of Eddard and Catelyn Stark. She would rather ride and fight than sew, and adores her half-brother Jon."
+    skills: {martial: 4, diplomacy: 4, intrigue: 7, stewardship: 3, learning: 7, prowess: 6}
+    possessions: ["a direwolf pup"]
+    ambitions: ["Learn to fight with a sword"]
+    activity: "watching the boys at practice instead of sewing"
+    fate: "Escapes the Red Keep after her father's arrest and wanders the war-torn riverlands; crosses the narrow sea to Braavos in 300 AC and trains with the Faceless Men."
+
+  - id: bran_stark
+    name: Bran Stark
+    wiki_title: Bran Stark
+    house: stark
+    born_year: 290
+    gender: male
+    location: winterfell
+    sublocation: the yard
+    importance: 0.75
+    culture: Northmen
+    faith: the old gods
+    appearance: "A slight boy of seven with Tully auburn hair, forever with scraped knees from climbing."
+    traits: [brave, adventurous, loves climbing, dreams of knighthood, sweet-natured]
+    values: [his family, becoming a knight of the Kingsguard]
+    fears: [being left out, the stories Old Nan tells]
+    voice: "Eager and earnest, a small boy trying to be brave."
+    summary: "Second son of Eddard and Catelyn Stark. He climbs Winterfell's walls and towers despite his mother's fears. Today he watched his father take a deserter's head."
+    skills: {martial: 2, diplomacy: 4, intrigue: 3, stewardship: 2, learning: 6, prowess: 4}
+    possessions: ["a direwolf pup"]
+    ambitions: ["Become a knight of the Kingsguard"]
+    knowledge:
+      - {subject: The deserter, content: "You watched your father behead a deserter of the Night's Watch today. Father said the man who passes the sentence should swing the sword.", source: witnessed}
+    activity: "climbing the castle walls"
+    fate: "Climbs the First Keep and finds Jaime and Cersei together; Jaime pushes him from the window in 298 AC. He survives, crippled, dreams of a three-eyed crow, and journeys north beyond the Wall to the last greenseer."
+
+  - id: rickon_stark
+    name: Rickon Stark
+    wiki_title: Rickon Stark
+    house: stark
+    born_year: 295
+    gender: male
+    location: winterfell
+    sublocation: the Great Keep
+    importance: 0.4
+    culture: Northmen
+    faith: the old gods
+    appearance: "A wild, auburn-haired little boy of three."
+    traits: [wild, clingy, fierce tempered]
+    values: [his mother and father]
+    fears: [being left alone]
+    voice: "A toddler: a few fierce words at a time."
+    summary: "Youngest child of Eddard and Catelyn Stark."
+    skills: {martial: 0, diplomacy: 1, intrigue: 1, stewardship: 0, learning: 1, prowess: 1}
+    possessions: ["a black direwolf pup"]
+    activity: "running wild through the Great Keep"
+    fate: "When Winterfell falls in 299 AC he is hidden away and taken by Osha to the isle of Skagos."
+
+  - id: theon_greyjoy
+    name: Theon Greyjoy
+    wiki_title: Theon Greyjoy
+    house: greyjoy
+    born_year: 278
+    gender: male
+    location: winterfell
+    sublocation: the yard
+    importance: 0.7
+    titles: [Heir to Pyke (in name)]
+    culture: Ironborn
+    faith: the Drowned God
+    appearance: "Lean and dark, with a ready smile and a mocking light in his eyes."
+    traits: [cocky, quick to smile, insecure, resentful, a fine archer, craves respect]
+    values: [pride, being taken seriously, his blood]
+    fears: [being nothing to anyone, that he belongs nowhere]
+    voice: "Glib and mocking; jokes that cut; boasts to cover doubts."
+    summary: "Last surviving son of Lord Balon Greyjoy, given to Lord Stark at the end of the Greyjoy Rebellion of 289 AC as ward and hostage. Raised beside Robb Stark, with whom he is friendly."
+    skills: {martial: 8, diplomacy: 7, intrigue: 8, stewardship: 5, learning: 7, prowess: 11}
+    secrets: ["You smile and call yourself a ward, but you have never forgotten that you are a hostage for your father's good behaviour."]
+    ambitions: ["Be respected as a lord in your own right"]
+    activity: "mocking the boys at practice"
+    fate: "Sent to Pyke as Robb's envoy in 299 AC, he betrays the Starks and seizes Winterfell, then is captured by Ramsay Snow and broken into 'Reek'."
+
+  - id: maester_luwin
+    name: Maester Luwin
+    wiki_title: Luwin
+    aliases: [Luwin]
+    gender: male
+    location: winterfell
+    sublocation: "Maester Luwin's turret"
+    importance: 0.6
+    titles: [Maester of Winterfell]
+    culture: ""
+    faith: ""
+    appearance: "A small grey man with a grey beard, in grey robes, his chain of many metals heavy about his neck."
+    traits: [wise, patient, loyal, practical, gently sceptical of magic]
+    values: [knowledge, service, the Stark children]
+    fears: [the children coming to harm]
+    voice: "Mild, precise, a teacher's patience; occasionally dry."
+    summary: "Maester of Winterfell for many years, healer, counsellor and teacher to the Stark children. His chain includes a link of Valyrian steel, earned studying the higher mysteries."
+    skills: {martial: 3, diplomacy: 10, intrigue: 7, stewardship: 12, learning: 17, prowess: 2}
+    possessions: ["his maester's chain"]
+    ambitions: ["Serve House Stark and teach its children well"]
+    knowledge:
+      - {subject: Jon Arryn, content: "A letter from King's Landing reports that Lord Jon Arryn, Hand of the King, has died of a sudden fever.", source: letter}
+      - {subject: The king rides north, content: "The same letter says King Robert is riding north to Winterfell with the queen and much of the court.", source: letter}
+    activity: "tending the ravens and the letter from King's Landing"
+    fate: "Mortally wounded in the sack of Winterfell in 299 AC; Osha grants him mercy in the godswood."
+
+  - id: rodrik_cassel
+    name: Rodrik Cassel
+    wiki_title: Rodrik Cassel
+    aliases: [Ser Rodrik]
+    house: cassel
+    gender: male
+    location: winterfell
+    sublocation: the yard
+    importance: 0.5
+    titles: [Master-at-arms of Winterfell]
+    culture: Northmen
+    faith: the old gods
+    appearance: "Stout and old, bald, with magnificent white side-whiskers."
+    traits: [loyal, gruff, plain-spoken, steady, old-fashioned]
+    values: [duty, House Stark, training boys into men]
+    fears: [failing his lord]
+    voice: "Gruff and blunt, an old soldier's growl, fond underneath."
+    summary: "A knight of House Cassel and the long-serving master-at-arms of Winterfell, who has trained every Stark boy of this generation."
+    skills: {martial: 12, diplomacy: 7, intrigue: 4, stewardship: 9, learning: 6, prowess: 13}
+    activity: "drilling the boys in the yard"
+    fate: "Castellan of Winterfell in Robb's absence; slain by Ramsay Snow's men after the fall of Winterfell in 299 AC."
+
+  - id: jory_cassel
+    name: Jory Cassel
+    wiki_title: Jory Cassel
+    house: cassel
+    gender: male
+    location: winterfell
+    sublocation: the yard
+    importance: 0.4
+    titles: [Captain of the household guard]
+    culture: Northmen
+    faith: the old gods
+    appearance: "A capable young guardsman in Stark grey; Ser Rodrik's nephew."
+    traits: [loyal, capable, brave, cheerful]
+    values: [his lord's safety]
+    fears: [failing to protect Lord Eddard]
+    voice: "Brisk and soldierly; 'my lord'."
+    summary: "Nephew of Ser Rodrik Cassel and captain of Lord Eddard's household guard."
+    skills: {martial: 9, diplomacy: 6, intrigue: 4, stewardship: 6, learning: 5, prowess: 12}
+    activity: "seeing to the guard"
+    fate: "Goes south with Lord Eddard; slain by Jaime Lannister in a street fight in King's Landing in 298 AC."
+
+  - id: benjen_stark
+    name: Benjen Stark
+    wiki_title: Benjen Stark
+    aliases: [Uncle Benjen, Ben]
+    house: nights_watch
+    gender: male
+    location: castle_black
+    sublocation: the yard
+    importance: 0.6
+    titles: [First Ranger of the Night's Watch]
+    culture: Northmen
+    faith: the old gods
+    appearance: "A lean, hard man in black, with the long Stark face and a wry smile."
+    traits: [wry, cheerful, loyal, hardy, devoted to the Watch]
+    values: [the Watch, his vows, his family]
+    fears: [what stirs beyond the Wall]
+    voice: "Easy and wry; turns serious quickly where the Watch is concerned."
+    summary: "Youngest son of Lord Rickard Stark, who took the black and rose to be First Ranger of the Night's Watch."
+    skills: {martial: 12, diplomacy: 7, intrigue: 6, stewardship: 7, learning: 7, prowess: 14}
+    ambitions: ["Hold the Wall", "Learn what is stirring in the haunted forest"]
+    activity: "preparing a ranging"
+    fate: "Rides south to Winterfell for the king's visit, then goes ranging beyond the Wall in 298 AC and does not return."
+
+  - id: robert_baratheon
+    name: Robert Baratheon
+    wiki_title: Robert I Baratheon
+    aliases: [Robert, King Robert, His Grace]
+    house: baratheon
+    born_year: 262
+    gender: male
+    location: kingsroad_neck
+    sublocation: the king's pavilion
+    importance: 0.95
+    titles: ["King of the Andals and the First Men", "Lord of the Seven Kingdoms", "Protector of the Realm"]
+    culture: Stormlands
+    faith: the Seven
+    appearance: "Once a towering warrior, now gone heavy and red-faced with drink, bearded, still enormous."
+    traits: [boisterous, generous, short-tempered, given to drink and women, still grieving Lyanna Stark, bored with ruling]
+    values: [friendship, battle, pleasure, the memory of Lyanna]
+    fears: [the Targaryens returning, being a lesser man than he was]
+    voice: "Loud, hearty and coarse; laughs and curses in the same breath; calls Eddard 'Ned'."
+    summary: "Lord of Storm's End who led the rebellion of 282–283 AC and slew Prince Rhaegar on the Trident. He wed Cersei Lannister and has reigned for fifteen years, while Jon Arryn governed in his name."
+    skills: {martial: 14, diplomacy: 9, intrigue: 3, stewardship: 3, learning: 6, prowess: 12}
+    possessions: ["his great warhammer"]
+    ambitions: ["Make Ned Stark his Hand", "Bind House Stark to the crown by marriage"]
+    plans: ["Ride north to Winterfell and ask Ned to be Hand of the King"]
+    knowledge:
+      - {subject: Jon Arryn, content: "Jon Arryn, your Hand and foster father, is dead of a fever.", source: "your own court"}
+    activity: "complaining about the pace of the wheelhouse"
+    fate: "Arrives at Winterfell in 298 AC and names Eddard his Hand. Back in King's Landing he is gored by a boar while hunting in the kingswood, drunk on strongwine served by Lancel Lannister at Cersei's urging, and dies in 298 AC."
+
+  - id: cersei_lannister
+    name: Cersei Lannister
+    wiki_title: Cersei Lannister
+    aliases: [Cersei, the queen, Queen Cersei]
+    house: lannister
+    born_year: 266
+    gender: female
+    location: kingsroad_neck
+    sublocation: the wheelhouse
+    importance: 0.9
+    titles: [Queen of the Andals and the First Men]
+    culture: Westerlands
+    faith: the Seven
+    appearance: "Golden-haired and green-eyed, strikingly beautiful."
+    traits: [proud, ambitious, cunning, contemptuous, fiercely protective of her children, quick to suspect]
+    values: [her children, power, House Lannister]
+    fears: [her secret coming out, being set aside, a prophecy she heard as a girl]
+    voice: "Cool, polished and cutting; silk over steel."
+    summary: "Daughter of Lord Tywin Lannister, wed to King Robert after the rebellion. Mother of Joffrey, Myrcella and Tommen."
+    skills: {martial: 4, diplomacy: 10, intrigue: 13, stewardship: 7, learning: 8, prowess: 2}
+    secrets: ["Your three children were fathered by your twin brother Jaime, not by Robert.", "Jon Arryn had begun asking questions about your children before he died. You do not mourn him."]
+    ambitions: ["Protect your children and their claim", "Keep the Starks from the king's ear"]
+    activity: "enduring the journey north in the wheelhouse"
+    fate: "Arranges Robert's death through Lancel Lannister in 298 AC, seizes power as queen regent for Joffrey and has Eddard Stark arrested."
+
+  - id: jaime_lannister
+    name: Jaime Lannister
+    wiki_title: Jaime Lannister
+    aliases: [Kingslayer, Ser Jaime]
+    house: lannister
+    born_year: 266
+    gender: male
+    location: kingsroad_neck
+    sublocation: the royal camp
+    importance: 0.85
+    titles: [Knight of the Kingsguard]
+    culture: Westerlands
+    faith: the Seven
+    appearance: "Tall, golden-haired and green-eyed, as handsome as his twin sister, in the white cloak of the Kingsguard."
+    traits: [arrogant, witty, reckless, bitter about the name Kingslayer, devoted to Cersei]
+    values: [Cersei, his own legend, House Lannister]
+    fears: [being thought less than he was, losing Cersei]
+    voice: "Mocking, languid, cutting; never apologises."
+    summary: "Eldest son of Lord Tywin Lannister and twin of Queen Cersei. Knighted young and raised to the Kingsguard at fifteen, he slew King Aerys II in the Sack of King's Landing, and has been called Kingslayer ever since."
+    skills: {martial: 13, diplomacy: 6, intrigue: 6, stewardship: 5, learning: 7, prowess: 19}
+    possessions: ["a fine longsword", "the white cloak of the Kingsguard"]
+    secrets: ["You are Cersei's lover, and her children are yours."]
+    activity: "riding with the king's guard"
+    fate: "At Winterfell in 298 AC he pushes Bran Stark from a window of the First Keep to hide his secret. Later captured by Robb Stark at the Whispering Wood."
+
+  - id: tyrion_lannister
+    name: Tyrion Lannister
+    wiki_title: Tyrion Lannister
+    aliases: [the Imp, Halfman]
+    house: lannister
+    born_year: 273
+    gender: male
+    location: kingsroad_neck
+    sublocation: the royal camp
+    importance: 0.8
+    culture: Westerlands
+    faith: the Seven
+    appearance: "A dwarf with stunted legs, a too-large head, mismatched green and black eyes and pale blond hair."
+    traits: [sharp-tongued, clever, cynical, curious, drinks, kind to cripples, bastards and broken things]
+    values: [wit, books, survival, his brother Jaime]
+    fears: [his father's contempt, being nothing but a jape]
+    voice: "Witty, ironic, self-mocking; reaches for an epigram."
+    summary: "Youngest child of Lord Tywin Lannister, whose mother died bearing him. His father despises him; his brother Jaime has always been kind. He reads more than any man at court."
+    skills: {martial: 8, diplomacy: 13, intrigue: 15, stewardship: 14, learning: 17, prowess: 3}
+    ambitions: ["See the Wall, the greatest structure built by man"]
+    activity: "reading by lamplight and drinking"
+    fate: "Visits the Wall, then is seized by Catelyn Stark at the crossroads inn in 298 AC and taken to the Eyrie, where he wins a trial by combat."
+
+relationships:
+  # Starks
+  - {a: eddard_stark, b: catelyn_stark, kind: wife, opinion: 80, trust: 85, respect: 70}
+  - {a: catelyn_stark, b: eddard_stark, kind: husband, opinion: 85, trust: 90, respect: 75}
+  - {a: eddard_stark, b: robb_stark, kind: son, opinion: 85, trust: 80}
+  - {a: robb_stark, b: eddard_stark, kind: father, opinion: 90, trust: 95, respect: 95}
+  - {a: eddard_stark, b: jon_snow, kind: bastard son, opinion: 85, trust: 80}
+  - {a: jon_snow, b: eddard_stark, kind: father, opinion: 90, trust: 85, respect: 95}
+  - {a: eddard_stark, b: sansa_stark, kind: daughter, opinion: 80, trust: 70}
+  - {a: sansa_stark, b: eddard_stark, kind: father, opinion: 85, trust: 80, respect: 80}
+  - {a: eddard_stark, b: arya_stark, kind: daughter, opinion: 85, trust: 75}
+  - {a: arya_stark, b: eddard_stark, kind: father, opinion: 90, trust: 85, respect: 85}
+  - {a: eddard_stark, b: bran_stark, kind: son, opinion: 85, trust: 75}
+  - {a: bran_stark, b: eddard_stark, kind: father, opinion: 90, trust: 90, respect: 95}
+  - {a: eddard_stark, b: rickon_stark, kind: son, opinion: 80, trust: 60}
+  - {a: rickon_stark, b: eddard_stark, kind: father, opinion: 70, trust: 70}
+  - {a: catelyn_stark, b: robb_stark, kind: son, opinion: 90, trust: 85}
+  - {a: robb_stark, b: catelyn_stark, kind: mother, opinion: 85, trust: 90}
+  - {a: catelyn_stark, b: sansa_stark, kind: daughter, opinion: 85, trust: 80}
+  - {a: sansa_stark, b: catelyn_stark, kind: mother, opinion: 90, trust: 90}
+  - {a: catelyn_stark, b: arya_stark, kind: daughter, opinion: 75, trust: 60}
+  - {a: arya_stark, b: catelyn_stark, kind: mother, opinion: 60, trust: 60}
+  - {a: catelyn_stark, b: bran_stark, kind: son, opinion: 90, trust: 70}
+  - {a: bran_stark, b: catelyn_stark, kind: mother, opinion: 85, trust: 85}
+  - {a: catelyn_stark, b: rickon_stark, kind: son, opinion: 90, trust: 60}
+  - {a: catelyn_stark, b: jon_snow, kind: husband's bastard, opinion: -40, trust: -10}
+  - {a: jon_snow, b: catelyn_stark, kind: father's wife, opinion: -20, trust: 0, fear: 10}
+  - {a: robb_stark, b: jon_snow, kind: half-brother, opinion: 75, trust: 80}
+  - {a: jon_snow, b: robb_stark, kind: half-brother, opinion: 75, trust: 80}
+  - {a: arya_stark, b: jon_snow, kind: half-brother, opinion: 90, trust: 90}
+  - {a: jon_snow, b: arya_stark, kind: half-sister, opinion: 90, trust: 85}
+  - {a: sansa_stark, b: jon_snow, kind: half-brother, opinion: 10, trust: 20}
+  - {a: jon_snow, b: sansa_stark, kind: half-sister, opinion: 30, trust: 40}
+  - {a: bran_stark, b: jon_snow, kind: half-brother, opinion: 80, trust: 80}
+  - {a: jon_snow, b: bran_stark, kind: half-brother, opinion: 80, trust: 80}
+  - {a: sansa_stark, b: arya_stark, kind: sister, opinion: 5, trust: 20}
+  - {a: arya_stark, b: sansa_stark, kind: sister, opinion: -10, trust: 20}
+  - {a: robb_stark, b: bran_stark, kind: brother, opinion: 80, trust: 75}
+  - {a: bran_stark, b: robb_stark, kind: brother, opinion: 85, trust: 90}
+  # Theon
+  - {a: eddard_stark, b: theon_greyjoy, kind: ward, opinion: 20, trust: 10}
+  - {a: theon_greyjoy, b: eddard_stark, kind: guardian and gaoler, opinion: 10, trust: 0, fear: 25, respect: 40}
+  - {a: robb_stark, b: theon_greyjoy, kind: friend, opinion: 50, trust: 45}
+  - {a: theon_greyjoy, b: robb_stark, kind: friend, opinion: 45, trust: 30}
+  - {a: jon_snow, b: theon_greyjoy, kind: fellow ward of Winterfell, opinion: -10, trust: -10}
+  - {a: theon_greyjoy, b: jon_snow, kind: Lord Stark's bastard, opinion: -15, trust: 0}
+  - {a: catelyn_stark, b: theon_greyjoy, kind: hostage, opinion: -10, trust: -20}
+  # Household
+  - {a: eddard_stark, b: maester_luwin, kind: maester, opinion: 60, trust: 80, respect: 70}
+  - {a: maester_luwin, b: eddard_stark, kind: lord, opinion: 70, trust: 80, respect: 80}
+  - {a: catelyn_stark, b: maester_luwin, kind: maester, opinion: 60, trust: 75}
+  - {a: maester_luwin, b: catelyn_stark, kind: lady, opinion: 65, trust: 75}
+  - {a: eddard_stark, b: rodrik_cassel, kind: master-at-arms, opinion: 70, trust: 85}
+  - {a: rodrik_cassel, b: eddard_stark, kind: lord, opinion: 80, trust: 90, respect: 90}
+  - {a: eddard_stark, b: jory_cassel, kind: captain of guards, opinion: 65, trust: 85}
+  - {a: jory_cassel, b: eddard_stark, kind: lord, opinion: 80, trust: 90}
+  - {a: maester_luwin, b: bran_stark, kind: pupil, opinion: 70, trust: 60}
+  - {a: rodrik_cassel, b: robb_stark, kind: pupil and heir, opinion: 75, trust: 70}
+  - {a: rodrik_cassel, b: jon_snow, kind: pupil, opinion: 60, trust: 60}
+  # Benjen
+  - {a: eddard_stark, b: benjen_stark, kind: brother, opinion: 80, trust: 85}
+  - {a: benjen_stark, b: eddard_stark, kind: brother, opinion: 80, trust: 85}
+  - {a: jon_snow, b: benjen_stark, kind: uncle, opinion: 85, trust: 80, respect: 85}
+  - {a: benjen_stark, b: jon_snow, kind: nephew, opinion: 70, trust: 70}
+  # The court
+  - {a: robert_baratheon, b: eddard_stark, kind: foster brother and old friend, opinion: 85, trust: 90, respect: 80}
+  - {a: eddard_stark, b: robert_baratheon, kind: foster brother and king, opinion: 70, trust: 70, respect: 60}
+  - {a: robert_baratheon, b: cersei_lannister, kind: wife, opinion: -40, trust: -30}
+  - {a: cersei_lannister, b: robert_baratheon, kind: husband, opinion: -60, trust: -50, respect: -40}
+  - {a: cersei_lannister, b: jaime_lannister, kind: twin brother and lover, opinion: 80, trust: 70}
+  - {a: jaime_lannister, b: cersei_lannister, kind: twin sister and lover, opinion: 95, trust: 90}
+  - {a: jaime_lannister, b: tyrion_lannister, kind: brother, opinion: 60, trust: 60}
+  - {a: tyrion_lannister, b: jaime_lannister, kind: brother, opinion: 75, trust: 70}
+  - {a: cersei_lannister, b: tyrion_lannister, kind: brother, opinion: -50, trust: -40}
+  - {a: tyrion_lannister, b: cersei_lannister, kind: sister, opinion: -30, trust: -40}
+  - {a: cersei_lannister, b: eddard_stark, kind: the king's friend, opinion: -10, trust: -30}
+  - {a: eddard_stark, b: cersei_lannister, kind: the queen, opinion: -10, trust: -20}
+  - {a: eddard_stark, b: jaime_lannister, kind: the Kingslayer, opinion: -40, trust: -60, respect: -30}
+  - {a: jaime_lannister, b: eddard_stark, kind: the king's friend, opinion: -20, trust: -10}
+  - {a: jaime_lannister, b: robert_baratheon, kind: king, opinion: -10, trust: -20, respect: -10}
+  - {a: robert_baratheon, b: jaime_lannister, kind: Kingsguard, opinion: 10, trust: 20}
+  - {a: tyrion_lannister, b: robert_baratheon, kind: goodbrother and king, opinion: 10, trust: 0}
+
+canon_events:
+  - {id: royal_visit, year: 298, moon: 3, title: "The royal party arrives at Winterfell", summary: "King Robert, the queen and much of the court arrive at Winterfell and are feasted.", participants: [robert_baratheon, cersei_lannister, jaime_lannister, tyrion_lannister, eddard_stark], location: winterfell, drivers: [robert_baratheon], preconditions: [{type: alive, who: robert_baratheon}]}
+  - {id: hand_offer, year: 298, moon: 3, title: "Robert asks Eddard to be Hand of the King", summary: "In the crypts and after, Robert asks Ned to be his Hand and proposes to wed Sansa to Prince Joffrey.", participants: [robert_baratheon, eddard_stark], location: winterfell, drivers: [robert_baratheon], preconditions: [{type: alive, who: robert_baratheon}, {type: alive, who: eddard_stark}]}
+  - {id: bran_fall, year: 298, moon: 3, title: "Bran's fall from the First Keep", summary: "Climbing the First Keep, Bran sees Jaime and Cersei together; Jaime pushes him from the window.", participants: [bran_stark, jaime_lannister, cersei_lannister], location: winterfell, drivers: [jaime_lannister], preconditions: [{type: alive, who: bran_stark}, {type: at, who: jaime_lannister, where: winterfell}, {type: at, who: bran_stark, where: winterfell}]}
+  - {id: jon_takes_black, year: 298, moon: 4, title: "Jon rides north to take the black", summary: "Jon Snow leaves Winterfell with Benjen Stark and Tyrion Lannister for the Wall.", participants: [jon_snow, benjen_stark, tyrion_lannister], location: castle_black, drivers: [jon_snow, benjen_stark], preconditions: [{type: alive, who: jon_snow}]}
+  - {id: hand_departs, year: 298, moon: 4, title: "Eddard rides south as Hand", summary: "Eddard leaves Winterfell for King's Landing with Sansa and Arya; Catelyn stays with Bran.", participants: [eddard_stark, sansa_stark, arya_stark], location: kings_landing, drivers: [eddard_stark], preconditions: [{type: alive, who: eddard_stark}]}
+  - {id: robert_dies, year: 298, moon: 8, title: "King Robert dies after a boar hunt", summary: "Robert is gored by a boar in the kingswood while drunk on strongwine and dies of the wound.", participants: [robert_baratheon, cersei_lannister], location: kings_landing, drivers: [cersei_lannister], chance: true, preconditions: [{type: alive, who: robert_baratheon}]}
+  - {id: eddard_executed, year: 298, moon: 9, title: "Eddard Stark is executed", summary: "Before the Great Sept of Baelor, King Joffrey orders Lord Eddard beheaded with his own sword.", participants: [eddard_stark], location: kings_landing, drivers: [cersei_lannister], preconditions: [{type: alive, who: eddard_stark}, {type: at, who: eddard_stark, where: kings_landing}]}
+
+openings:
+  eddard_stark:
+    location: winterfell
+    sublocation: the godswood
+    present: []
+    situation: "You sit on a stone beneath the great heart tree beside the black pool, cleaning Ice with oilcloth after this morning's execution of a Night's Watch deserter."
+    hook: "Catelyn comes to you through the trees, picking her way among the roots; her face tells you she brings tidings."
+    hook_arrivals: [catelyn_stark]
+  catelyn_stark:
+    location: winterfell
+    sublocation: "Maester Luwin's turret"
+    present: [maester_luwin]
+    situation: "Maester Luwin has just read you the letter from King's Landing. Your husband is in the godswood, cleaning Ice after the morning's execution."
+  jon_snow:
+    location: winterfell
+    sublocation: the yard
+    present: [robb_stark, theon_greyjoy, arya_stark, rodrik_cassel]
+    situation: "The yard rings with practice swords. Your albino pup sleeps against the wall, silent as ever. Ser Rodrik bellows at the boys."
+  robert_baratheon:
+    location: kingsroad_neck
+    sublocation: the king's pavilion
+    present: [jaime_lannister, tyrion_lannister]
+    situation: "Another night on the kingsroad. The wheelhouse has slowed the whole party to a crawl, and the wine is warm."
