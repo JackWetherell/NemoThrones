@@ -1,0 +1,28 @@
+# Gazetteer for generated era packs. Coordinates are ROUGH GAME-MAP MILES (x east,
+# y south, the Wall at y=0), used only to estimate travel and raven times. They are
+# game estimates, not canon. Unknown places are added without coordinates.
+- {id: castle_black, name: Castle Black, region: the Wall, kind: castle, x: 0, y: 0, has_maester: true, sublocations: ["the common hall", "the yard", "the top of the Wall", "the Lord Commander's tower"]}
+- {id: last_hearth, name: Last Hearth, region: the North, kind: castle, x: 80, y: 180, has_maester: true}
+- {id: the_dreadfort, name: The Dreadfort, region: the North, kind: castle, x: 150, y: 380, has_maester: true}
+- {id: bear_island, name: Bear Island, region: the North, kind: castle, x: -350, y: 300, has_maester: true}
+- {id: winterfell, name: Winterfell, region: the North, kind: castle, x: -30, y: 450, has_maester: true, sublocations: ["the godswood", "the yard", "the great hall", "the Great Keep", "Maester Luwin's turret", "the crypts", "the kennels", "the stables"]}
+- {id: white_harbor, name: White Harbor, region: the North, kind: city, x: 150, y: 700, has_maester: true}
+- {id: moat_cailin, name: Moat Cailin, region: the Neck, kind: ruin, x: -20, y: 820}
+- {id: the_twins, name: The Twins, region: the Riverlands, kind: castle, x: -40, y: 1100, has_maester: true}
+- {id: the_eyrie, name: The Eyrie, region: the Vale, kind: castle, x: 300, y: 1150, has_maester: true}
+- {id: pyke, name: Pyke, region: the Iron Islands, kind: castle, x: -700, y: 1150, has_maester: true}
+- {id: riverrun, name: Riverrun, region: the Riverlands, kind: castle, x: -250, y: 1350, has_maester: true}
+- {id: harrenhal, name: Harrenhal, region: the Riverlands, kind: castle, x: 50, y: 1400, has_maester: true}
+- {id: casterly_rock, name: Casterly Rock, region: the Westerlands, kind: castle, x: -650, y: 1450, has_maester: true, aliases: [the Rock]}
+- {id: dragonstone, name: Dragonstone, region: the Crownlands, kind: castle, x: 450, y: 1550, has_maester: true}
+- {id: kings_landing, name: King's Landing, region: the Crownlands, kind: city, x: 250, y: 1650, has_maester: true, aliases: [the capital, the Red Keep], sublocations: ["the Red Keep", "the throne room", "the Tower of the Hand", "Flea Bottom", "the Great Sept of Baelor"]}
+- {id: storms_end, name: Storm's End, region: the Stormlands, kind: castle, x: 450, y: 1900, has_maester: true}
+- {id: highgarden, name: Highgarden, region: the Reach, kind: castle, x: -450, y: 1950, has_maester: true}
+- {id: oldtown, name: Oldtown, region: the Reach, kind: city, x: -650, y: 2250, has_maester: true, aliases: [the Citadel]}
+- {id: sunspear, name: Sunspear, region: Dorne, kind: castle, x: 500, y: 2450, has_maester: true}
+- {id: ashford, name: Ashford, region: the Reach, kind: castle, x: -150, y: 2000, has_maester: true}
+- {id: braavos, name: Braavos, region: Essos, kind: city, x: 900, y: 1000}
+- {id: pentos, name: Pentos, region: Essos, kind: city, x: 900, y: 1500, sublocations: ["Magister Illyrio's manse", "the gardens", "the docks"]}
+- {id: volantis, name: Volantis, region: Essos, kind: city, x: 1500, y: 2300}
+- {id: meereen, name: Meereen, region: Essos, kind: city, x: 2700, y: 2400}
+- {id: qarth, name: Qarth, region: Essos, kind: city, x: 3500, y: 2800}

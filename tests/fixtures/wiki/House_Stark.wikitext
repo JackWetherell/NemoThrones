@@ -1,0 +1,10 @@
+{{House
+| Coat of arms = A grey direwolf racing across an ice-white field
+| Words = ''Winter is Coming''
+| Seat = [[Winterfell]]
+| Region = [[The North]]
+| Head = [[Eddard Stark]]
+}}
+'''House Stark of Winterfell''' is a [[Great House]] of [[Westeros]].
+==Members==
+* [[Eddard Stark]], [[Catelyn Stark]], [[Robb Stark]], [[Jon Snow]], [[Rickard Stark]]

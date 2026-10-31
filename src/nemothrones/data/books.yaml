@@ -1,0 +1,20 @@
+# Dates of the "Recent Events" subsections on WOIAF character pages, used by the
+# time-slicer. A section whose last year is before the start year is PAST; one whose
+# first year is at or after it is FATE; anything straddling it is decided per
+# paragraph (by the years mentioned, then by an LLM classifier, then: fate).
+# null = an anthology spanning eras: use the years mentioned in each paragraph.
+"A Game of Thrones": [297, 299]
+"A Clash of Kings": [299, 299]
+"A Storm of Swords": [299, 300]
+"A Feast for Crows": [300, 300]
+"A Dance with Dragons": [299, 300]
+"The Winds of Winter": [300, 301]
+"A Dream of Spring": [301, 305]
+"The Hedge Knight": [209, 209]
+"The Sworn Sword": [211, 211]
+"The Mystery Knight": [212, 212]
+"The Princess and the Queen": [129, 131]
+"The Rogue Prince": [97, 129]
+"The Sons of the Dragon": [37, 48]
+"Fire & Blood": null
+"The World of Ice & Fire": null

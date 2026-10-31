@@ -235,17 +235,23 @@ def mock_lore_deep(ctx: dict, inp: str) -> dict:
     return {"answer": f"The maesters record little on '{inp}' (mock).", "sources": []}
 
 
+PLACES = ("Winterfell", "Castle Black", "King's Landing", "Riverrun", "Pentos", "The Eyrie", "Storm's End",
+          "Casterly Rock", "Dragonstone", "The Twins", "Pyke", "Highgarden", "Oldtown", "Sunspear")
+
+
 def mock_dossier(ctx: dict, inp: str) -> dict:
     info = ctx.get("infobox", {})
     past = ctx.get("past_text", "")
     first = re.split(r"(?<=[.!?])\s+", past.strip())[:3]
+    mentioned = [(past.rfind(p), p) for p in PLACES if p in past]
+    location = max(mentioned)[1] if mentioned else ctx.get("location_hint")
     return {
-        "name": ctx.get("name", "Unknown"), "titles": [t.strip() for t in str(info.get("title", "")).split(",") if t.strip()][:4],
+        "name": ctx.get("name", "Unknown"), "titles": [],
         "house": ctx.get("house_hint"), "gender": "", "culture": info.get("culture", ""), "faith": info.get("religion", ""),
         "appearance": "", "traits": ["guarded"], "values": ["family"], "fears": ["dishonour"],
         "voice": "measured and plain", "summary": " ".join(first)[:600],
         "skills": {"martial": 9, "diplomacy": 9, "intrigue": 8, "stewardship": 8, "learning": 8, "prowess": 9},
-        "location": ctx.get("location_hint"), "sublocation": "", "activity": "", "health": "hale",
+        "location": location, "sublocation": "", "activity": "", "health": "hale",
         "possessions": [], "secrets": [], "ambitions": ["protect their house"], "plans": [],
         "knowledge": [], "relationships": [],
     }

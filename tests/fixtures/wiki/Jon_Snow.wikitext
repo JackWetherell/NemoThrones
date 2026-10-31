@@ -1,0 +1,17 @@
+{{Character
+| Title = [[Lord Commander of the Night's Watch]]
+| Allegiance = [[House Stark]]<br>[[Night's Watch]]
+| Culture = [[Northmen]]
+| Born = In [[283 AC]]
+| Father = [[Eddard Stark]]
+}}
+'''Jon Snow''' is the bastard son of [[Eddard Stark]]. He becomes [[Lord Commander of the Night's Watch]].
+
+==History==
+Jon was raised at [[Winterfell]] alongside his half-siblings, including [[Robb Stark]].
+
+==Recent Events==
+===A Game of Thrones===
+Jon joins the [[Night's Watch]] at [[Castle Black]].
+===A Storm of Swords===
+Jon is elected [[Lord Commander of the Night's Watch]].

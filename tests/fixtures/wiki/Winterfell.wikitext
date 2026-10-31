@@ -1,0 +1,6 @@
+{{Castle
+| Type = Castle
+| Location = [[The North]]
+| Rulers = [[House Stark]]
+}}
+'''Winterfell''' is the seat of [[House Stark]].

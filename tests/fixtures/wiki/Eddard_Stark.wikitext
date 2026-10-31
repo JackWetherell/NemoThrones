@@ -1,0 +1,42 @@
+{{Character
+| Title = [[Lord of Winterfell]]<br>[[Warden of the North]]<br>[[Hand of the King]]
+| Image = Eddard.jpg
+| Allegiance = [[House Stark]]
+| Culture = [[Northmen]]
+| Religion = [[Old gods of the forest|Old gods]]
+| Born = In [[263 AC]]<ref>Synthetic fixture.</ref><br>[[Winterfell]]
+| Died = In [[298 AC]]<br>[[Great Sept of Baelor]], [[King's Landing]]
+| Father = [[Rickard Stark]]
+| Mother = [[Lyarra Stark]]
+| Spouse = [[Catelyn Tully]]
+| Issue = [[Robb Stark]]<br>[[Sansa Stark]]<br>[[Arya Stark]]<br>[[Bran Stark]]<br>[[Rickon Stark]]
+| Book(s) = ''[[A Game of Thrones]]''
+}}
+'''Lord Eddard Stark''', also called '''Ned''', is the head of [[House Stark]] and [[Lord of Winterfell]]. He is beheaded on the steps of the [[Great Sept of Baelor]].
+
+==Appearance and Character==
+Eddard has a long face and dark hair, and he is grave and quiet. He holds to honour.
+
+==History==
+Eddard was the second son of [[Rickard Stark]], born in [[263 AC]]. He was fostered at the [[Eyrie]] with [[Robert I Baratheon|Robert Baratheon]] under [[Jon Arryn]].
+In [[282 AC]] his father and brother [[Brandon Stark]] were killed by [[Aerys II Targaryen]], and Eddard joined [[Robert's Rebellion]].
+He married [[Catelyn Tully]] at [[Riverrun]]. After the war he returned to [[Winterfell]] with his bastard son, [[Jon Snow]].
+In [[289 AC]] he fought in the [[Greyjoy Rebellion]], and afterwards took [[Theon Greyjoy]] as his ward.
+
+==Recent Events==
+===A Game of Thrones===
+Eddard executes a deserter of the [[Night's Watch]]. [[Robert I Baratheon|King Robert]] comes to Winterfell and names Eddard [[Hand of the King]]. After Robert's death Eddard is arrested and beheaded on the order of [[Joffrey I Baratheon]].
+
+===A Clash of Kings===
+His bones are sent north.
+
+==Quotes by Eddard==
+{{Quote|The man who passes the sentence should swing the sword.|Eddard to Bran}}
+
+==Family==
+{{Stark family tree}}
+
+==References==
+<references/>
+[[Category:House Stark]]
+[[Category:Northmen]]

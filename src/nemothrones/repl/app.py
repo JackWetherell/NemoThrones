@@ -187,9 +187,13 @@ class Session:
         try:
             pack, player_id = await lore.build_pack(character, year, moon, progress=lambda m: self.say("system", m))
         except Exception as e:
+            await lore.aclose()
             await llm.aclose()
+            if self.settings.dev:
+                raise
             self.say("error", f"Could not build that world: {e}")
             return False
+        await lore.aclose()
         return await self._create(pack, player_id, save, llm=llm)
 
     async def _create(self, pack, player_id: str, save: Path | None, llm: LLM | None = None) -> bool:
@@ -236,6 +240,7 @@ class Session:
                 titles = await lore.search_characters(choice)
             except Exception as e:
                 self.say("error", f"WOIAF is unreachable ({e}). Offline, choose a featured life with a number.")
+            await lore.aclose()
         await llm.aclose()
         if not titles:
             self.say("system", f"No one called '{choice}' could be found.")

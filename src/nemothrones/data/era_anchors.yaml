@@ -1,0 +1,46 @@
+# Curated anchors for cast selection: who reigns, and which houses are great, in a
+# given year. Titles are WOIAF page titles; reigns are years AC (inclusive start,
+# exclusive end). The cast is still selected and verified from the wiki itself;
+# anchors only make sure the obvious powers are considered.
+monarchs:
+  - {title: Aegon I Targaryen, from: 1, to: 37}
+  - {title: Aenys I Targaryen, from: 37, to: 42}
+  - {title: Maegor I Targaryen, from: 42, to: 48}
+  - {title: Jaehaerys I Targaryen, from: 48, to: 103}
+  - {title: Viserys I Targaryen, from: 103, to: 129}
+  - {title: Aegon II Targaryen, from: 129, to: 131}
+  - {title: Rhaenyra Targaryen, from: 129, to: 130}
+  - {title: Aegon III Targaryen, from: 131, to: 157}
+  - {title: Daeron I Targaryen, from: 157, to: 161}
+  - {title: Baelor I Targaryen, from: 161, to: 171}
+  - {title: Viserys II Targaryen, from: 171, to: 172}
+  - {title: Aegon IV Targaryen, from: 172, to: 184}
+  - {title: Daeron II Targaryen, from: 184, to: 209}
+  - {title: Aerys I Targaryen, from: 209, to: 221}
+  - {title: Maekar I Targaryen, from: 221, to: 233}
+  - {title: Aegon V Targaryen, from: 233, to: 259}
+  - {title: Jaehaerys II Targaryen, from: 259, to: 262}
+  - {title: Aerys II Targaryen, from: 262, to: 283}
+  - {title: Robert I Baratheon, from: 283, to: 298}
+  - {title: Joffrey I Baratheon, from: 298, to: 300}
+  - {title: Tommen I Baratheon, from: 300, to: 999}
+
+great_houses:
+  - {title: House Targaryen, from: -126, to: 999}
+  - {title: House Stark, from: -8000, to: 999}
+  - {title: House Lannister, from: -8000, to: 999}
+  - {title: House Baratheon, from: 1, to: 999}
+  - {title: House Arryn, from: -6000, to: 999}
+  - {title: House Tully, from: 1, to: 999}
+  - {title: House Tyrell, from: 1, to: 999}
+  - {title: House Martell, from: -700, to: 999}
+  - {title: House Greyjoy, from: -2000, to: 999}
+  - {title: House Durrandon, from: -8000, to: 1}
+  - {title: House Gardener, from: -8000, to: 1}
+  - {title: House Hoare, from: -1000, to: 1}
+
+# Approximate. The Citadel declares seasons; these are game estimates for packs.
+seasons:
+  - {from: 289, to: 299, season: summer}
+  - {from: 299, to: 300, season: autumn}
+  - {from: 300, to: 999, season: winter}

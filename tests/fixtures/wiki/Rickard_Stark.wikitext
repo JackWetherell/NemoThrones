@@ -1,0 +1,10 @@
+{{Character
+| Title = [[Lord of Winterfell]]
+| Allegiance = [[House Stark]]
+| Born = In [[230 AC]]
+| Died = In [[282 AC]]<br>[[Red Keep]]
+| Issue = [[Brandon Stark]]<br>[[Eddard Stark]]
+}}
+'''Rickard Stark''' was Lord of Winterfell. He was killed by [[Aerys II Targaryen]] in [[282 AC]].
+==History==
+Rickard was burned alive by the Mad King in [[282 AC]].

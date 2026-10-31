@@ -100,6 +100,15 @@ Any other character and year builds an **era pack** from the wiki:
 
 The first start in an era takes a few minutes; dossiers are cached for later starts.
 
+Inspect what the Maester sees, without starting a game:
+
+```bash
+nemothrones lore probe "Eddard Stark"          # what the parser found on the live wiki
+nemothrones lore cast "Eddard Stark" --year 298 # who would be in the cast, and why
+nemothrones lore dossier "Jon Snow" --year 298  # the time-sliced dossier (and the fate, marked as spoilers)
+nemothrones lore page "Robb Stark" --year 298   # what /lore would show
+```
+
 ## Playing
 
 - **Speak** with quotes: `"My lord, a word."`. **Act** in plain words:

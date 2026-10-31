@@ -1,0 +1,14 @@
+{{Character
+| Title = [[King of the Andals and the First Men]]<br>[[Lord of the Seven Kingdoms]]
+| Allegiance = [[House Baratheon]]
+| Culture = [[Stormlands]]
+| Born = In [[262 AC]]<br>[[Storm's End]]
+| Died = In [[298 AC]]<br>[[King's Landing]]
+| Spouse = [[Cersei Lannister]]
+}}
+'''Robert I Baratheon''' is the king of the [[Seven Kingdoms]]. He dies after a hunt.
+==History==
+Robert led [[Robert's Rebellion]] in [[282 AC]] and was crowned in [[283 AC]] at [[King's Landing]]. He was fostered with [[Eddard Stark]] at the [[Eyrie]].
+==Recent Events==
+===A Game of Thrones===
+Robert rides to [[Winterfell]] to name [[Eddard Stark]] his Hand. He is gored by a boar and dies.

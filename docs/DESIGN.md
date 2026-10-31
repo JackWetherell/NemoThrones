@@ -478,12 +478,21 @@ replay is bit-identical. `Store.rebuild()` replays the log into a fresh database
 
 - Book "Recent Events" sections are dated by `data/books.yaml` (AGOT 298–299, ACOK
   299, ASOS 299–300, AFFC/ADWD 300, TWOW 300+, Dunk & Egg 209–212, the Dance 129–131…).
-- History paragraphs are classified by the years they mention. Paragraphs with no year
-  inherit their predecessor's class.
+- History paragraphs are classified by the years they mention: all earlier is past,
+  any later is fate, and only the start year itself is ambiguous (it may already be
+  true on the year's first day). Undated paragraphs inherit their predecessor's class
+  in chronological sections, and are ambiguous in descriptive ones (lead, Appearance
+  and Character).
 - Ambiguous passages, which mention years on both sides of D, go to an LLM classifier.
   If it is unavailable they are treated as **fate**, so spoilers are never risked.
 - Quotes, references, behind-the-scenes and media sections are dropped: no verbatim
   book text is ever stored.
+- **Infobox lifetime lists never reach a dossier or `/lore`.** WOIAF's titles,
+  allegiances, spouses, issue, siblings and aliases cover the whole life (Jon Snow's
+  include "Lord Commander" and "Night's Watch"). Only birth, parents, culture, faith
+  and the first-listed house are passed on; everything else comes from the sliced past.
+- **In a year of succession, the old monarch reigns at its start.** In 298 AC the
+  common knowledge says Robert sits the throne, not Joffrey.
 
 **How cast selection works:**
 
@@ -500,8 +509,10 @@ replay is bit-identical. `Store.rebuild()` replays the log into a fresh database
 - No canon character is ever invented. Sparse eras get smaller casts. Unnamed extras
   (guards, smallfolk) are Tier 3, made on encounter.
 
-**Promotion on encounter.** Writing to, or meeting, a canon character outside the cast
-builds their dossier on demand and adds them as a new agent.
+**Promotion on encounter.** Writing to a canon character outside the cast builds their
+dossier on demand (sliced to the current in-game year, with their fate recorded for
+the Director) and adds them as a Tier-1 agent at their WOIAF location. Promotion on
+meeting someone in person, for example on arrival somewhere, comes with travel in M3.
 
 **Spoiler rules.** `/lore` shows only the past relative to the in-game date (marked
 "may be imperfect"). Book canon overrides the shows in every prompt. WOIAF text is
@@ -627,7 +638,7 @@ These could not be exercised from the build environment. `doctor` checks each on
 |---|---|---|
 | **M0 Foundations** | config, LLM layer (5 backends, repair, fallback, breaker, budget, log, replay), event-sourced store, clock, dice, odds, policy, deploy/start scripts, doctor, this design | **built** |
 | **M1 Vertical slice** | Winterfell 298 AC seed pack (17 agents), REPL + commands, full turn pipeline, odds + confirmation, options, Tier 0/1/2 + batching + exchanges, witnesses, letters, memory, waits, Director hooks, Warden, mortality, death → Chronicle → read-only, save/load, Hermes plugin + skills | **built** |
-| **M2 WOIAF lore pipeline** | client + cache, parser, dates, time-slicer, dossiers, fate → canon events, cast top-N, era packs, any character / any year, `/lore`, promotion on encounter, `woiaf-maester` skill | in progress |
+| **M2 WOIAF lore pipeline** | client + cache, parser, dates, time-slicer, dossiers, fate → canon events, cast top-N, era packs, any character / any year, `/lore`, promotion on encounter (by letter), `woiaf-maester` skill | **built**; tested against synthetic WOIAF-format pages only. The live wiki is unverified (§8.1) |
 | M3 Living world | rumour diffusion, interception politics, gazetteer + routes + `/travel` with interruptions, `/map` `/wars` `/rumors`, travelling companions, promotion heuristics | later |
 | M4 Managers in full | Butterfly gravity mechanics (plan seeding, odds bias, chance scheduling, precondition tracking), Warden LLM checks, Chronicler reflections, `/journal` synthesis | later |
 | M5 Depth | armies, wars and battles; holdings and economy (light); disease; seasons, winter and the Others; era-gated magic and dragons; succession and inheritance | later |

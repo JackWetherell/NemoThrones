@@ -1,0 +1,20 @@
+{{Character
+| Title = [[Lady of Winterfell]]
+| Allegiance = [[House Tully]]<br>[[House Stark]]
+| Culture = [[Rivermen]]
+| Born = In [[264 AC]]<br>[[Riverrun]]
+| Died = In [[299 AC]]<br>[[The Twins]]
+| Father = [[Hoster Tully]]
+| Spouse = [[Eddard Stark]]
+| Issue = [[Robb Stark]]<br>[[Sansa Stark]]<br>[[Arya Stark]]<br>[[Bran Stark]]<br>[[Rickon Stark]]
+}}
+'''Catelyn Stark''' is the wife of Lord [[Eddard Stark]]. She is murdered at the [[Red Wedding]].
+
+==History==
+Catelyn was the elder daughter of [[Hoster Tully]] of [[Riverrun]]. She married [[Eddard Stark]] after the death of [[Brandon Stark]] in [[282 AC]].
+
+==Recent Events==
+===A Game of Thrones===
+Catelyn tells Eddard of [[Jon Arryn]]'s death. She later arrests [[Tyrion Lannister]].
+===A Storm of Swords===
+Catelyn dies at the [[Red Wedding]] at [[The Twins]].

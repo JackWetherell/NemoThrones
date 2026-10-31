@@ -137,6 +137,9 @@ class Game:
         return delta
 
     async def close(self) -> None:
+        if self.lore is not None:
+            await self.lore.aclose()
+            self.lore = None
         await self.llm.aclose()
         if self.readonly:
             self.store.close()
