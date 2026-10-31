@@ -1,0 +1,59 @@
+# NemoThrones egress preset (filename must match preset.name).
+#
+# Apply on the host:
+#   nemohermes prometheus policy-add --from-file policy/nemothrones.yaml --dry-run
+#   nemohermes prometheus policy-add --from-file policy/nemothrones.yaml --yes
+#
+# Why this exists:
+#   1. The game queries A Wiki of Ice and Fire (MediaWiki API) for canon.
+#   2. The binaries: allowlist binds every endpoint to specific executables. The game
+#      venv is new, so without this it has no network at all, whatever the endpoints
+#      permit (the lesson from physics-research.yaml).
+#   3. Hermes's own python is listed for the wiki too, so the Hermes GM and the
+#      woiaf-maester skill can consult it.
+#
+# Inference needs no entry here: the game calls https://inference.local, which
+# OpenShell's privacy router handles (credentials injected, model rewritten).
+
+preset:
+  name: nemothrones
+  description: "A Wiki of Ice and Fire (read-only) and PyPI for the NemoThrones game venv"
+
+network_policies:
+  nemothrones:
+    name: nemothrones
+    endpoints:
+      # --- A Wiki of Ice and Fire: MediaWiki API and page views, read-only ---
+      - host: awoiaf.westeros.org
+        port: 443
+        protocol: rest
+        enforcement: enforce
+        rules:
+          - allow: { method: GET, path: "/api.php" }
+          - allow: { method: GET, path: "/api.php/**" }
+          - allow: { method: GET, path: "/index.php/**" }
+          - allow: { method: HEAD, path: "/**" }
+      # --- Python packages, for the game venv on the volume (deploy.sh prefers an
+      #     offline wheelhouse; this is the fallback) ---
+      - host: pypi.org
+        port: 443
+        protocol: rest
+        enforcement: enforce
+        rules:
+          - allow: { method: GET, path: "/**" }
+          - allow: { method: HEAD, path: "/**" }
+      - host: files.pythonhosted.org
+        port: 443
+        protocol: rest
+        enforcement: enforce
+        rules:
+          - allow: { method: GET, path: "/**" }
+          - allow: { method: HEAD, path: "/**" }
+    binaries:
+      - { path: /sandbox/.hermes/workspace/nemothrones/.venv/bin/python* }
+      - { path: /sandbox/.hermes/workspace/nemothrones/.venv/bin/pip* }
+      - { path: /sandbox/.hermes/workspace/nemothrones/.venv/bin/nemothrones }
+      - { path: /opt/hermes/.venv/bin/python* }
+      - { path: /usr/bin/python3* }
+      - { path: /usr/local/bin/python3* }
+      - { path: /usr/bin/curl }

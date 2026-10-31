@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+build/
+dist/
+wheelhouse/
+.pytest_cache/
+.ruff_cache/
+
+# Game state: saves, lore cache (WOIAF text is CC BY-SA and is never committed), logs
+saves/
+*.db
+*.db-wal
+*.db-shm
+lore-cache/
+logs/
+*.log
+
+# Secrets: tokens, keys
+*token*
+*.key
+*.pem
+.env
+.env.*
+/nemothrones.yaml
+!nemothrones.example.yaml

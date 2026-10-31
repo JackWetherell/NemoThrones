@@ -1,0 +1,36 @@
+# NemoThrones configuration. Copy to <home>/nemothrones.yaml (in the sandbox:
+# /sandbox/.hermes/workspace/nemothrones/nemothrones.yaml). Every key is optional;
+# `nemothrones config` prints the full effective configuration.
+
+game:
+  canon_gravity: 0.6        # 0 sandbox · 0.6 butterfly · 1.0 fated (per-save: /gravity)
+  odds_display: exact       # exact | fuzzy | off            (per-save: /odds)
+  verbosity: standard       # terse | standard | lush        (per-save: /verbosity)
+  cast_size: 100            # nemo agents in a generated era pack
+  tier1_size: 25            # agents simulated daily; the rest weekly, in batches
+  lethal_confirm_threshold: 0.05
+
+budget:
+  session_warn_usd: 2.0     # background agents slow down past this
+  session_hard_usd: 5.0     # all LLM calls stop here (also set a credit limit on the OpenRouter key)
+
+llm:
+  concurrency: 12
+  roles:
+    # The Game Master and Director think through Hermes (tools, memory, WOIAF);
+    # everyone else talks straight to inference.local. Fallbacks keep play going.
+    gm:       {backend: hermes, fallback: [inference_local]}
+    director: {backend: hermes, fallback: [inference_local]}
+    # narrator: {backend: inference_local}
+  backends:
+    hermes:
+      base_url: http://127.0.0.1:8642/v1
+      # key: NEMOTHRONES_HERMES_TOKEN env, else <home>/hermes_api_token, else /sandbox/.hermes/.env
+    inference_local:
+      base_url: https://inference.local/v1
+      # ca_bundle: /path/to/openshell-ca.pem   # only if the proxy CA is not in the system store
+
+lore:
+  api_url: https://awoiaf.westeros.org/api.php
+  rate_limit_s: 1.0
+  contact: ""               # optional: added to the User-Agent sent to the wiki
