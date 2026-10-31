@@ -1,0 +1,378 @@
+================================================================================
+ NEMOTHRONES - LOCAL TESTING INSTRUCTIONS
+ For Jack, and for the Claude Code session helping him.
+ Branch: claude/nemothrones-game-design-mtz5v2
+================================================================================
+
+HOW TO READ THIS FILE
+
+  [YOU]     A step only the human can do: a key, sudo, a security decision,
+            spending money, an interactive terminal, a reboot.
+  [CLAUDE]  A step Claude Code can run on its own.
+
+  Work through the stages in order. Each stage costs more (money, trust or
+  setup) than the one before, and catches different problems:
+
+    A  offline, mock LLM, no network, $0        does the code work at all?
+    B  live wiki from the host, $0              does WOIAF parse as assumed?
+    C  real DeepSeek from the host, ~$0.01/turn is the game any good?
+    D  inside the nemo sandbox                  does the nemo integration work?
+
+  WHAT HAS AND HAS NOT BEEN TESTED: everything so far ran in a cloud build
+  environment that could NOT reach the wiki, OpenRouter, Hermes or the sandbox.
+  So all 103 tests use a deterministic mock LLM and hand-written, WOIAF-style
+  test pages. Stages B-D are the first contact with reality; expect some fixes.
+
+
+--------------------------------------------------------------------------------
+0. READ ME FIRST (for Claude Code)
+--------------------------------------------------------------------------------
+
+What this is
+  NemoThrones is a text adventure set in A Song of Ice and Fire. The player picks
+  any canon character and a start year, then lives that life through dialogue
+  and decisions until the character dies. There is no objective. Other characters
+  are persistent "nemo agents" that act in the background at a level of detail
+  set by how relevant they are to the player.
+
+  Canon is A Wiki of Ice and Fire (awoiaf.westeros.org). The game runs on Jack's
+  "nemo" stack: NemoClaw + an OpenShell sandbox called "prometheus" + Hermes
+  Agent + DeepSeek v4.1 Flash via OpenRouter.
+
+  Core principle: the engine owns the facts; LLMs supply the voice. LLMs propose
+  JSON; the Warden validates it; the engine computes odds, rolls the dice and
+  commits each turn as one SQLite transaction over an append-only event log.
+
+Read in this order
+  1. docs/DESIGN.md, sections 1-3 (principles, architecture, the turn), then
+     section 8.1 (the integration points nobody has verified yet)
+  2. README.md
+  3. src/nemothrones/engine/game.py    the turn pipeline: _execute, _reactions,
+                                        _advance, _background, _direct, _narrate
+  4. src/nemothrones/engine/odds.py    the probability model
+  5. src/nemothrones/engine/warden.py  validation of every LLM output
+  6. src/nemothrones/agents/prompts.py the system prompt of every role
+  7. src/nemothrones/lore/slicer.py    the past/fate split (spoiler control)
+  8. src/nemothrones/world/store.py    event-sourced store, reducers, rebuild()
+  9. src/nemothrones/llm/client.py     role routing, fallback, repair retry
+
+Ground rules
+  - Never commit API keys, tokens or WOIAF page text. The wiki text is CC BY-SA
+    and stays in the local cache (lore.db).
+  - Saves are written only by the engine. The Hermes plugin opens them read-only.
+  - Fate (canon after the start date) must never reach agent, narrator or GM
+    prompts. Keep tests/unit/test_fate_isolation.py green. Only world/fate.py
+    reads the fate table, and only allowed modules may import it.
+  - Run "ruff check src tests" and "pytest" before every commit.
+
+
+--------------------------------------------------------------------------------
+1. PREREQUISITES
+--------------------------------------------------------------------------------
+
+[CLAUDE] Check the host:
+    python3 --version          # must be 3.11 or newer
+    git --version
+    docker ps                  # must work without sudo
+    command -v nemohermes      # the nemo stack's CLI
+    hermes --status            # phase should be Ready (start it with: hermes --no-launch)
+
+[YOU] sudo is needed ONLY if "docker ps" fails. The fix is the same as nemo's
+      setup-host.sh:
+    sudo systemctl enable --now docker       # if docker is not running
+    sudo usermod -aG docker $USER            # if you are not in the docker group
+                                             # (then log out and back in)
+    Nothing else in this guide needs sudo.
+
+
+--------------------------------------------------------------------------------
+2. STAGE A - OFFLINE, FREE, NO KEYS                                    [CLAUDE]
+--------------------------------------------------------------------------------
+
+Set up
+    git clone https://github.com/JackWetherell/NemoThrones.git   # or: git fetch
+    cd NemoThrones
+    git checkout claude/nemothrones-game-design-mtz5v2
+    python3 -m venv .venv
+    .venv/bin/pip install -e '.[dev]'
+
+Lint and test
+    .venv/bin/ruff check src tests            # expect: All checks passed!
+    .venv/bin/pytest                          # expect: 103 passed
+
+A scripted life of Eddard Stark (mock LLM, deterministic)
+    .venv/bin/nemothrones new --start eddard_298 --llm mock --seed 42 \
+        --script tests/fixtures/sessions/ned_298.txt --plain --home /tmp/nt-a
+
+  In the output, check for:
+    - the opening in the godswood (Catelyn arrives)
+    - numbered options with odds, e.g. "[Keen eye 23% · Nothing 77%]"
+    - /why explaining an opposed roll ("diplomacy 9 vs Theon Greyjoy ...")
+    - "This could be the death of you (99%). Proceed? (y/n)"
+    - "Eddard Stark is dead" and "The Chronicle of Eddard Stark"
+    - /debug rebuild: "Event-log replay matches the materialised world"
+    - the save file is now read-only:  ls -l /tmp/nt-a/saves/
+
+  Mock prose is placeholder: it checks the plumbing, not the writing.
+
+[YOU] (optional) Play interactively on the mock:
+    .venv/bin/nemothrones new --start jon_298 --llm mock --home /tmp/nt-a2
+
+
+--------------------------------------------------------------------------------
+3. STAGE B - THE LIVE WIKI FROM THE HOST (free)                        [CLAUDE]
+--------------------------------------------------------------------------------
+
+The host has open internet (the sandbox does not). This stage checks my
+untested assumptions about the WOIAF API and its page markup. It makes polite
+requests: at most one per second, on one connection.
+
+    H=~/.nemothrones-dev
+    .venv/bin/nemothrones lore probe "Eddard Stark" --home $H
+
+  Expected:
+    "infobox_template": "Character"
+    "infobox_keys": includes "born", "died", "father", "allegiance" ...
+    "sections": includes "Recent Events > A Game of Thrones"
+    "is_character": true
+
+  If it fails or looks wrong, fix it and add a test:
+    - HTTP/JSON error      check lore.api_url (default https://awoiaf.westeros.org/api.php)
+    - template not found   lore/parse.py INFOBOX_RE (template names)
+    - keys missing         lore/parse.py CHAR_KEYS; SAFE_INFOBOX in lore/dossier.py
+    - sections mis-dated   data/books.yaml (book subsection titles and years)
+    - junk in prose        lore/parse.py clean() and SKIP_SECTION_RE
+    You may record a small trimmed snippet of real markup as a test fixture if
+    needed. Keep it minimal and attributed (CC BY-SA); prefer the synthetic style
+    in tests/fixtures/wiki/.
+
+Then:
+    .venv/bin/nemothrones lore search "Jon Snow" --home $H
+    .venv/bin/nemothrones lore page "Robb Stark" --year 298 --home $H
+        # must NOT contain "Red Wedding", "King in the North" or a death date
+    .venv/bin/nemothrones lore page "Jon Snow" --year 298 --home $H
+        # must NOT contain "Lord Commander" or "Night's Watch" (his future)
+    .venv/bin/nemothrones lore cast "Eddard Stark" --year 298 --home $H
+        # takes 1-2 minutes; the top ranks should be Ned's kin, Robert, the
+        # Lannisters and so on. Nobody dead before 298 should appear.
+
+Cross-check the hand-authored seed pack against the wiki
+  File: src/nemothrones/data/seed_packs/winterfell_298.yaml
+  It was written from memory of the books. Check:
+    - birth years (born_year) for each character
+    - the year in each "fate:" text (e.g. Eddard's execution: 298 or 299 AC?)
+    - canon_events years. The moons are game estimates; say so if you leave them.
+  Fix discrepancies and rerun pytest.
+
+
+--------------------------------------------------------------------------------
+4. STAGE C - A REAL LLM FROM THE HOST
+--------------------------------------------------------------------------------
+
+[YOU] Provide an OpenRouter API key:
+    - Create or choose a key on openrouter.ai and set a HARD CREDIT LIMIT ON THE
+      KEY itself (e.g. $5), as the nemo README advises.
+    - Export it in YOUR OWN shell only. Never put it in a file in this repo or
+      in the sandbox:
+          export OPENROUTER_API_KEY=sk-or-...
+    - Start Claude Code from that same shell so it inherits the variable.
+    - Expected spend: about $0.01-0.02 per turn. A generated-era start (below)
+      costs about $0.30-0.50 once.
+
+[YOU] Approve the spend before Claude Code runs anything in this stage.
+
+"--llm openrouter_direct" routes EVERY role (GM, narrator, agents) straight to
+DeepSeek on OpenRouter. Hermes is not involved until Stage D.
+
+[CLAUDE] A short scripted session with a real model:
+    printf '%s\n' '"Cat. What news?"' '1' \
+        '"Robert is coming here? Then we must prepare the castle."' \
+        '/who' '/why' '/wait 2 hours' '/cost' '/debug llm' '/debug thoughts' > /tmp/ned_real.txt
+    .venv/bin/nemothrones new --start eddard_298 --llm openrouter_direct \
+        --script /tmp/ned_real.txt --plain --home $H
+
+  Check:
+    - /debug llm: any FAIL rows or "invalid" (JSON) errors? Repairs are allowed;
+      repeated failures are not.
+    - /cost: the per-turn spend.
+    - Prose: second person, includes every spoken line verbatim, sensible length.
+    - Agents stay in character and know only their own beliefs. Catelyn should
+      bring news of Jon Arryn; Ned should not know it before she tells him.
+    - Options are sensible, with odds.
+  If a role keeps failing validation, look at its prompt in agents/prompts.py
+  and its schema in agents/schemas.py. Use --dev to see full tracebacks.
+
+[YOU] Play about 10 turns interactively. Claude Code cannot drive the
+      interactive prompt; it can only use --script files.
+    .venv/bin/nemothrones new --start eddard_298 --llm openrouter_direct --home $H
+  Things to try:
+    - a persuasion  ("Cat, you must trust me in this.")
+    - a letter      (write to Benjen Stark: ...)
+    - a wait        (/wait 3 days)
+    - a risky act, to see the confirmation prompt
+    - a spoiler probe: ask Catelyn about the Red Wedding (she must not know it)
+    - /know Robert, /house Lannister, /lore Robert I Baratheon, /journal
+
+[CLAUDE] A start generated from WOIAF (the M2 pipeline end to end):
+    printf 'game:\n  cast_size: 20\n' > $H/nemothrones.yaml   # cheaper first run
+    printf '%s\n' '/me' '/who' '/debug agents' '/cost' > /tmp/dany.txt
+    .venv/bin/nemothrones new --character "Daenerys Targaryen" --year 298 \
+        --llm openrouter_direct --script /tmp/dany.txt --plain --home $H
+  Also inspect one dossier and its (spoiler) fate:
+    .venv/bin/nemothrones lore dossier "Jon Snow" --year 298 --llm openrouter_direct --home $H
+  ("lore dossier" needs --llm on the host: the default inference.local exists
+   only inside the sandbox.)
+  Check that the dossier contains nothing from after 298 AC.
+
+
+--------------------------------------------------------------------------------
+5. STAGE D - DEPLOY INTO THE NEMO SANDBOX
+--------------------------------------------------------------------------------
+
+[YOU] Make sure the stack is up:
+    hermes --no-launch
+    hermes --status            # Phase Ready, Inference healthy
+
+[CLAUDE] Preflight (read-only), then deploy:
+    ./scripts/deploy.sh --check
+    PATH="$PWD/.venv/bin:$PATH" ./scripts/deploy.sh --no-policy
+  The PATH prefix makes deploy.sh use the venv's pip, avoiding Arch's
+  "externally managed" system pip.
+  deploy.sh does the following:
+    - builds a wheel, plus an offline wheelhouse for the sandbox's Python
+    - docker cp's it into /sandbox/.hermes/workspace/nemothrones
+    - creates the venv and installs with pip --no-index (no sandbox network needed)
+    - installs the Hermes plugin and skills
+    - adds "nemothrones" to plugins.enabled in config.yaml (backing up the old file)
+    - appends a section to the workspace AGENTS.md
+
+[YOU] Approve the egress preset. This is a SECURITY DECISION: it widens what
+      the sandbox may reach.
+    Read policy/nemothrones.yaml first. It allows GET on awoiaf.westeros.org,
+    plus PyPI, for the game venv's python and Hermes's python only. Then:
+    nemohermes prometheus policy-add --from-file policy/nemothrones.yaml --dry-run
+    nemohermes prometheus policy-add --from-file policy/nemothrones.yaml --yes
+    nemohermes prometheus policy-list        # confirm "nemothrones" is listed
+
+[YOU] Restart Hermes so it loads the plugin:
+    hermes --stop && hermes --no-launch
+
+[YOU] Open the game (an interactive sandbox shell):
+    ./scripts/start_nemothrones.sh
+  This writes the Hermes API token into the sandbox (mode 600), then runs
+  "nemohermes prometheus connect". Inside that shell:
+    G=/sandbox/.hermes/workspace/nemothrones/.venv/bin/nemothrones
+    $G doctor                    # every line [ ok ]? Copy the output for Claude.
+    $G new --start eddard_298
+    # in the game:
+    /debug llm     # the last line says "GM served by: gm=..."
+                   #   gm=hermes           -> the Hermes GM works
+                   #   gm=inference_local  -> Hermes failed and the GM fell back
+    /lore Eddard Stark
+    /cost
+    /quit
+
+[YOU] Optional: from the Hermes TUI or dashboard, ask Hermes to "use nt_scene and
+      describe the current NemoThrones scene". This proves the plugin's tools
+      are registered.
+
+
+--------------------------------------------------------------------------------
+6. THE INTEGRATION POINTS NOBODY HAS VERIFIED - SYMPTOMS AND FIXES
+--------------------------------------------------------------------------------
+
+  inference.local (TLS or routing)
+    symptom: doctor "[fail] inference_local"
+    fix:     check "nemohermes prometheus status" for inference health. If it is
+             a TLS error, set llm.backends.inference_local.ca_bundle in
+             /sandbox/.hermes/workspace/nemothrones/nemothrones.yaml to the
+             proxy CA bundle (or set SSL_CERT_FILE).
+
+  The Hermes API from inside the sandbox
+    symptom: doctor "[fail] hermes", or /debug llm shows gm=inference_local
+    checks:  - Does /sandbox/.hermes/workspace/nemothrones/hermes_api_token exist
+               (written by start_nemothrones.sh)?
+             - Is "nemohermes prometheus gateway-token" the API bearer, or is it
+               API_SERVER_KEY in /sandbox/.hermes/.env? The code tries the env
+               var, then the token file, then .env.
+             - Is 127.0.0.1:8642 reachable inside the sandbox?
+                 T=/sandbox/.hermes/workspace/nemothrones/hermes_api_token
+                 curl -s http://127.0.0.1:8642/v1/chat/completions \
+                   -H "Authorization: Bearer $(cat $T)" -H 'Content-Type: application/json' \
+                   -d '{"messages":[{"role":"user","content":"hello"}],"stream":false}'
+             - The Hermes reply must be ONE JSON object; see /debug llm errors.
+    note:    the game still works on the fallback; this only affects the GM.
+
+  Hermes plugin registration
+    symptom: Hermes logs an error at start, or the nt_* tools are missing
+    fix:     match _register() in hermes/plugin/nemothrones/__init__.py to your
+             Hermes version's ctx.register_tool(...) signature (see the Hermes
+             docs: "Build a Hermes Plugin"). Confirm plugins.enabled in
+             /sandbox/.hermes/config.yaml.
+
+  Skills location
+    symptom: "nemohermes prometheus skill list" lacks nemothrones-gm and woiaf-maester
+    fix:     deploy.sh copies them to /sandbox/.hermes/skills/<name>/. Move
+             them if your Hermes reads skills from somewhere else.
+
+  WOIAF inside the sandbox
+    symptom: doctor "[fail] WOIAF"
+    checks:  - "nemohermes prometheus policy-list" shows nemothrones
+             - the venv path in policy binaries: matches the real interpreter
+               (venvs symlink python -> python3.x; the glob python* covers it)
+             - "nemohermes prometheus logs --follow" for denied_action events
+
+  TTY entry
+    symptom: "connect" gives a shell, but the game will not start
+    fix:     run the full venv path by hand ($G above), or try
+             NEMOTHRONES_ENTRY=docker ./scripts/start_nemothrones.sh
+             (note: docker exec runs outside the supervisor's process context,
+             so inference.local may not resolve there)
+
+  docker exec -u sandbox
+    symptom: "unable to find user sandbox"
+    fix:     use the uid (998, per the nemo README) in sx() in scripts/deploy.sh
+
+
+--------------------------------------------------------------------------------
+7. SAFETY AND HOUSEKEEPING                                                [YOU]
+--------------------------------------------------------------------------------
+
+  - BEFORE ANY REBOOT:  hermes --backup && hermes --stop
+    Saves, lore.db and the game venv live in /sandbox/.hermes/workspace/
+    nemothrones; an unclean reboot can force a destroy, which wipes the volume.
+  - Spend caps: per session, a warning at $2.00 and a hard stop at $5.00
+    (budget.* in nemothrones.yaml). Keep the OpenRouter key's own limit too.
+  - Ironman: when your character dies, the save becomes a read-only Chronicle.
+    That is by design. Use /save for snapshots before risky experiments.
+  - Revert the plugin: remove "nemothrones" from plugins.enabled in
+    /sandbox/.hermes/config.yaml (a .bak-nemothrones copy was made), then
+    restart Hermes.
+  - Remove the egress preset:
+      nemohermes prometheus policy-remove nemothrones --yes
+
+
+--------------------------------------------------------------------------------
+8. REPORTING BACK, AND WHAT TO FIX
+--------------------------------------------------------------------------------
+
+Capture these:
+  [ ] Stage A: pytest summary; did the scripted life reach the Chronicle?
+  [ ] Stage B: lore probe output; any parser fixes made; seed-pack corrections
+  [ ] Stage C: /debug llm failures (role, error), cost per turn, prose and agent
+               quality notes, and any spoiler or future-knowledge leaks (exact text)
+  [ ] Stage D: full doctor output; the gm= backend shown by /debug llm; whether
+               the plugin tools are visible in Hermes
+
+[CLAUDE] Fix what you can on the same branch:
+  - add or adjust a test for each fix (tests/unit/..., or tests/integration/...)
+  - run ruff check src tests && pytest
+  - commit with a clear message, then: git push -u origin claude/nemothrones-game-design-mtz5v2
+
+What is next after this testing (docs/DESIGN.md section 12): M3 living world
+(rumours, travel, /map), M4 the full Butterfly canon-gravity mechanics,
+M5 depth (armies, wars, seasons, magic), M6 polish (streaming, evals,
+light-cone precompute, an optional local model on the 4090 for background agents).
+
+Winter is coming.
+================================================================================
